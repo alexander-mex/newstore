@@ -1,0 +1,175 @@
+.product-editor-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+}
+
+.product-editor-modal .modal-container {
+  border-radius: 0.5em;
+  box-shadow: 0 0 1em 0 var(--light-shadow-secondary);
+  background-color: #daedb9;
+  color: var(--light-text-accent);
+  overflow: hidden;
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  box-sizing: border-box;
+  margin: 0 auto;
+  animation: fadeIn var(--transition-med);
+}
+
+.bg-dark .modal-container {
+  background-color: #1e1e1e;
+  color: var(--dark-text-accent);
+}
+
+.product-editor-modal .modal-header {
+  border-bottom: 1px solid var(--light-border-accent);
+  padding: 1em;
+  background-color: #c3d4a5 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bg-dark .modal-header {
+  background: var(--dark-bg-secondary) !important;
+  border-bottom-color: var(--dark-border-accent) !important;
+}
+
+.product-editor-modal .modal-title {
+  font-size: 1.5em;
+  text-align: center;
+  width: 100%;
+  color: var(--light-text-accent);
+}
+
+.bg-dark .product-editor-modal .modal-title {
+  color: var(--dark-text-accent);
+}
+
+.product-editor-modal .modal-body {
+  padding: 1.5em;
+  overflow-y: auto;
+  max-height: 70vh;
+  background-color: #d0e2b0;
+}
+
+.bg-dark .modal-body {
+  background: var(--dark-bg-tertiary) !important;
+}
+
+.product-editor-modal .modal-footer {
+  border-top: 1px solid var(--light-border-accent);
+  padding: 1em;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #c3d4a5 !important;
+}
+
+.bg-dark .modal-footer {
+  background: var(--dark-bg-secondary) !important;
+  border-top-color: var(--dark-border-accent) !important;
+}
+
+.form-group {
+  margin-bottom: 1em;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  color: var(--light-text-secondary);
+}
+
+.bg-dark .form-label {
+  color: var(--dark-text-secondary);
+}
+
+.rounded-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto !important;
+}
+
+.bg-dark .form-control {
+  background-color: var(--dark-bg-form-control);
+  border-color: var(--dark-border-secondary);
+  color: #e0e0e0;
+}
+
+.form-control::placeholder {
+  color: var(--light-text-secondary) !important;
+}
+
+.bg-dark .form-control::placeholder {
+  color: #afc9e1 !important;
+}
+
+.form-select {
+  padding: 0.5em;
+  border: 1px solid var(--light-text-secondary);
+  border-radius: 0.25em;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: var(--light-text-secondary);
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235e2210'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5em center;
+  background-size: 1.5em;
+}
+
+.bg-dark .form-select {
+  border-color: var(--dark-border-accent) !important;
+  background-color: rgba(30, 30, 30, 0.8) !important;
+  color: var(--dark-text-secondary) !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27%23c3d4a5%27%3e%3cpath d=%27M7 10l5 5 5-5z%27/%3e%3c/svg%3e");
+}
+
+.image-upload-placeholder {
+  border: 2px dashed var(--light-border-accent);
+  border-radius: 0.25em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.bg-dark .image-upload-placeholder {
+  border-color: var(--dark-text-accent);
+}
+
+.image-upload-placeholder:hover {
+  background-color: rgba(94, 34, 16, 0.1);
+}
+
+.bg-dark .image-upload-placeholder:hover {
+  background-color: rgba(195, 212, 165, 0.1);
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.25em;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+  .form-select {
+    width: 80% !important;
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,225 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 120px);
+  padding: 2rem;
+  max-width: 100%;
+}
+
+.profile-content {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--light-text-secondary);
+  font-family: var(--cookie-font);
+}
+
+.bg-dark .profile-header {
+  color: var(--dark-text-secondary);
+}
+
+.profile-alert {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.profile-card {
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  border: none;
+  transition: background-color var(--transition-med), color var(--transition-med), box-shadow var(--transition-med);
+  height: 100%;
+  background: #eee;
+}
+
+.dark-theme .profile-card {
+  background-color: var(--dark-bg-card);
+  color: #e0e0e0;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.profile-card .card-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--light-text-accent);
+  font-size: 2em;
+  font-family: var(--cookie-font);
+}
+
+.dark-theme .profile-card .card-title {
+  color: var(--dark-text-secondary);
+}
+
+.profile-card .form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--light-text-accent);
+}
+
+.dark-theme .profile-card .form-label {
+  color: var(--dark-text-secondary);
+}
+
+.profile-card .form-control {
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ced4da;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: var(--light-text-primary);
+}
+
+.dark-theme .profile-card .form-control {
+  background-color: var(--dark-bg-form-control);
+  border-color: var(--dark-border-secondary);
+  color: #e0e0e0;
+}
+
+.profile-card .form-control:focus {
+  border-color: #ccb494;
+  box-shadow: 0 0 0 0.25rem rgba(204, 180, 148, 0.25);
+}
+
+.profile-form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-direction: column;
+  align-items: end;
+}
+
+.profile-actions {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  background: #eeeeee;
+}
+
+.profile-actions h3 {
+  font-family: var(--cookie-font);
+}
+
+.dark-theme .profile-actions {
+  background-color: var(--dark-bg-card);
+  color: #e0e0e0;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.profile-actions h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--light-text-accent);
+}
+
+.dark-theme .profile-actions h3 {
+  color: var(--dark-text-secondary);
+}
+
+.profile-actions-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+}
+
+.profile-actions-buttons .profile-button {
+  margin: 0 auto !important;
+}
+
+.profile-actions-buttons .btn-danger {
+  background: #dc3545 !important;
+  color: var(--dark-text-secondary) !important;
+}
+
+.profile-actions-buttons .btn-danger:hover {
+  background: #c82333 !important;
+  color: var(--dark-text-accent) !important;
+}
+
+.orders-list {
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.order-item {
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dark-theme .order-item {
+  border-color: #444;
+  background-color: var(--light-text-primary);
+}
+
+.order-item p {
+  margin-bottom: 0.4rem;
+  line-height: 1.4;
+}
+
+.order-item p:last-child {
+  margin-bottom: 0;
+}
+
+.modal.dark-theme .modal-content {
+  background-color: var(--dark-bg-card);
+  color: #e0e0e0;
+}
+
+.modal.dark-theme .modal-header {
+  border-bottom-color: #444;
+}
+
+.modal.dark-theme .modal-footer {
+  border-top-color: #444;
+}
+
+.modal.dark-theme .btn-close {
+  filter: invert(1);
+}
+
+/* ResetPassword */
+.reset-password-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+.reset-password-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme .reset-password-card {
+  background-color: #2c2c2c;
+  color: var(--dark-text-secondary);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

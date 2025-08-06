@@ -1,0 +1,127 @@
+.card-editor {
+  height: 100%;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.card-editor-slider {
+  width: 80% !important;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.dark-modal .card-editor,
+.dark-modal .card-editor-slider {
+  background: #2b2b2b !important;
+}
+
+.card-editor:hover {
+  transform: translateY(-2px);
+}
+
+.module-slider-card-editor {
+  height: 100%;
+  width: 65%;
+}
+
+.dark-modal .modal-title {
+  color: var(--dark-text-secondary);
+}
+
+.dark-modal .module-slider-card-editor {
+  background: #2b2b2b !important;
+}
+
+.dark-modal .modal-content {
+  background-color: #2c3e50 !important;
+  border: 1px solid #34495e;
+}
+
+.dark-modal .modal-header {
+  border-bottom: 1px solid #34495e;
+}
+
+.dark-modal .modal-footer {
+  border-top: 1px solid #34495e;
+}
+
+.dark-tabs .nav-link {
+  color: #ecf0f1 !important;
+  background-color: transparent;
+  border-color: #34495e;
+}
+
+.dark-tabs .nav-link.active {
+  color: #2c3e50 !important;
+  background-color: #ecf0f1;
+  border-color: #34495e;
+}
+
+.dark-tabs .nav-link:hover {
+  color: #bdc3c7 !important;
+  background-color: #34495e;
+}
+
+.content-editor-card {
+  transition: transform var(--transition-fast);
+}
+
+.content-editor-card:hover {
+  transform: translateY(-2px);
+}
+
+.content-preview-image {
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  transition: border-color var(--transition-fast);
+}
+
+.content-preview-image:hover {
+  border-color: #007bff;
+}
+
+.dark-modal .content-preview-image {
+  border-color: #495057;
+}
+
+.dark-modal .content-preview-image:hover {
+  border-color: #0d6efd;
+}
+
+.dark-modal .form-control:focus {
+  background-color: #495057;
+  border-color: #0d6efd;
+  color: var(--dark-text-secondary);
+}
+
+.badge-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.content-badge {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.badge-new {
+  background-color: #28a745;
+  color: white;
+}
+
+.badge-sale {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-delete-card {
+  margin: 0 !important;
+}
+
+.btn-add-card,
+.btn-save-card {
+  flex: 1;
+}
