@@ -40,7 +40,7 @@ function ProductDetailPage({ darkMode, language }) {
 
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const response = await axios.get(`https://newstore-sepia.vercel.app/api/products/${id}`);
         setProduct(response.data);
         setLoading(false);
       } catch (err) {
@@ -118,12 +118,12 @@ function ProductDetailPage({ darkMode, language }) {
     try {
       let response;
       if (editingReview) {
-        response = await axios.put(`http://localhost:5000/api/products/${product._id}/reviews/${editingReview}`, {
+        response = await axios.put(`https://newstore-sepia.vercel.app/api/products/${product._id}/reviews/${editingReview}`, {
           text: reviewText,
           rating: reviewRating,
         });
       } else {
-        response = await axios.post(`http://localhost:5000/api/products/${product._id}/reviews`, {
+        response = await axios.post(`https://newstore-sepia.vercel.app/api/products/${product._id}/reviews`, {
           userId: user.id,
           userName: user.name,
           text: reviewText,
@@ -155,7 +155,7 @@ function ProductDetailPage({ darkMode, language }) {
       }
   
       const response = await axios.delete(
-        `http://localhost:5000/api/products/${product._id}/reviews/${reviewId}`
+        `https://newstore-sepia.vercel.app/api/products/${product._id}/reviews/${reviewId}`
       );
   
       if (response.data && response.data._id) {

@@ -51,7 +51,7 @@ const CheckoutPage = ({ darkMode, language }) => {
     if (isAuthenticated) {
       const fetchUserData = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/api/auth/profile', {
+          const response = await axios.get('https://newstore-sepia.vercel.app/api/auth/profile', {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -148,7 +148,7 @@ const CheckoutPage = ({ darkMode, language }) => {
         totalAmount: total
       };
       
-      const response = await axios.post('http://localhost:5000/api/orders', orderData, {
+      const response = await axios.post('https://newstore-sepia.vercel.app/api/orders', orderData, {
         headers: isAuthenticated ? {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         } : {}

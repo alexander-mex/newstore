@@ -48,7 +48,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     if (isAuthenticated) {
       const fetchProfileData = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/api/auth/profile', {
+          const response = await axios.get('https://newstore-sepia.vercel.app/api/auth/profile', {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -63,7 +63,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
 
       const fetchOrders = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/api/orders', {
+          const response = await axios.get('https://newstore-sepia.vercel.app/api/orders', {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -131,7 +131,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     if (validateProfile()) {
       try {
         const response = await axios.put(
-          'http://localhost:5000/api/auth/profile',
+          'https://newstore-sepia.vercel.app/api/auth/profile',
           profileData,
           {
             headers: {
@@ -166,7 +166,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     if (validatePassword()) {
       try {
         await axios.put(
-          'http://localhost:5000/api/auth/password',
+          'https://newstore-sepia.vercel.app/api/auth/password',
           {
             oldPassword: passwordData.oldPassword,
             newPassword: passwordData.newPassword,
@@ -195,7 +195,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
 
   const handleResetPassword = async () => {
     try {
-      await axios.post('http://localhost:5000/api/auth/forgot-password', {
+      await axios.post('https://newstore-sepia.vercel.app/api/auth/forgot-password', {
         email: profileData.email
       });
       showToast(
@@ -220,7 +220,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     }
   
     try {
-      await axios.delete('http://localhost:5000/api/auth/profile', {
+      await axios.delete('https://newstore-sepia.vercel.app/api/auth/profile', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

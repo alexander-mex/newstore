@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 // CORS налаштування
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://newstore-eta.vercel.app',
+  'https://newstore-sepia.vercel.app/',
   process.env.CLIENT_URL
 ].filter(Boolean);
 

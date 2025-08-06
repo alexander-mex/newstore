@@ -142,7 +142,7 @@ const AuthModals = ({ language, darkMode, isAuthenticated, mobileView = false, t
   const handleResendVerification = async () => {
     setIsLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/resend-verification', {
+      await axios.post('https://newstore-sepia.vercel.app/api/auth/resend-verification', {
         userId: errors.userId
       });
       setSuccessMessage(language === "uk"
@@ -183,7 +183,7 @@ const AuthModals = ({ language, darkMode, isAuthenticated, mobileView = false, t
   const handleForgotPassword = async () => {
     try {
       setIsLoading(true);
-      await axios.post('http://localhost:5000/api/auth/forgot-password', {
+      await axios.post('https://newstore-sepia.vercel.app/api/auth/forgot-password', {
         email: forgotPasswordEmail
       });
       setSuccessMessage(language === "uk" 

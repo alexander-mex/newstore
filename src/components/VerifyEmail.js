@@ -17,7 +17,7 @@ const VerifyEmail = () => {
       try {
         console.log('Sending verification request...');
         const response = await axios.get(
-          `http://localhost:5000/api/auth/verify-email`,
+          `https://newstore-sepia.vercel.app/api/auth/verify-email`,
           {
             params: { token },
             headers: {

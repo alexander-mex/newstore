@@ -39,7 +39,7 @@ const ResetPassword = ({ darkMode, language }) => {
 
     try {
       setLoading(true);
-      await axios.post('http://localhost:5000/api/auth/reset-password', {
+      await axios.post('https://newstore-sepia.vercel.app/api/auth/reset-password', {
         token,
         newPassword: password
       });
