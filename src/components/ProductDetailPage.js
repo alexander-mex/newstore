@@ -41,10 +41,12 @@ function ProductDetailPage({ darkMode, language }) {
 
       try {
         setLoading(true);
-        const response = await axios.get(`${PRODUCTS_API_URL}/products/${id}`);
+        // FIX: Remove duplicate /products from the URL
+        const response = await axios.get(`${PRODUCTS_API_URL}/${id}`);
         setProduct(response.data);
         setLoading(false);
       } catch (err) {
+        console.error("Error fetching product:", err);
         setError(language === "uk" ? "Помилка завантаження товару" : "Error loading product");
         setLoading(false);
       }
@@ -241,7 +243,7 @@ function ProductDetailPage({ darkMode, language }) {
                   {product.images.map((image, index) => (
                     <Image
                       key={index}
-                      src={image}
+                      src={image || "/placeholder.svg"}
                       alt={`${getLocalizedText(product.name)} ${index + 1}`}
                       className="slider-image"
                       onClick={() => handleImageClick(image)}
@@ -272,7 +274,8 @@ function ProductDetailPage({ darkMode, language }) {
                 product.category === 'accessories' ? 'Аксесуари' :
                 product.category === 'footwear' ? 'Взуття' :
                 product.category === 'clothing' ? 'Одяг' :
-                product.category === 'bags' ? 'Сумки' : product.category
+                product.category === 'bags' ? 'Сумки' : product.category,
+                product.category
               )}
             </p>
             <p>
@@ -439,7 +442,7 @@ function ProductDetailPage({ darkMode, language }) {
       {showZoomModal && (
         <div className="zoom-modal" onClick={handleCloseModal}>
           <button className="close-modal" onClick={handleCloseModal}>✕</button>
-          <img src={zoomedImage} alt="Zoomed product" className="zoom-image" />
+          <img src={zoomedImage || "/placeholder.svg"} alt="Zoomed product" className="zoom-image" />
         </div>
       )}
     </Container>
