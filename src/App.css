@@ -1020,8 +1020,8 @@ body {
 /* Стилі для спінера завантаження */
 .loading-spinner {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   border: 3px solid var(--light-text-primary);
   border-top: 3px solid transparent;
   border-radius: 50%;

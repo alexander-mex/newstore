@@ -249,7 +249,7 @@ function ProductDetailModal({ show, onHide, product, darkMode, language, onProdu
                 {images.map((img, index) => (
                   <Carousel.Item key={index}>
                     <img
-                      src={`http://localhost:5000${img}`}
+                      src={`${img}`}
                       alt={`${getLocalizedText(name)} ${index + 1}`}
                       onError={(e) => { e.target.onerror = null; e.target.src = "path/to/placeholder-image.jpg"; }}
                     />

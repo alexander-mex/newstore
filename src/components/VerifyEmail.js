@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AUTH_API_URL } from '../config/constants';
 
 const VerifyEmail = () => {
   const [searchParams] = useSearchParams();
@@ -17,7 +18,7 @@ const VerifyEmail = () => {
       try {
         console.log('Sending verification request...');
         const response = await axios.get(
-          `https://newstore-sepia.vercel.app/api/auth/verify-email`,
+          `${AUTH_API_URL}/verify-email`,
           {
             params: { token },
             headers: {

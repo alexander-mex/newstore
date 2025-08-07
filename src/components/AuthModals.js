@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { useAuth } from '../context/AuthContext';
+import { AUTH_API_URL } from '../config/constants';
 import axios from 'axios';
 import "../App.css";
 
@@ -129,7 +130,7 @@ const AuthModals = ({ language, darkMode, isAuthenticated, mobileView = false, t
           });
         } else if (response.success) {
           setSuccessMessage(language === "uk" ? "Успішний вхід!" : "Login successful!");
-          setTimeout(handleClose, 150000000);
+          setTimeout(handleClose, 1500);
         }
       } catch (error) {
         setErrors({ apiError: error.message || String(error) });
@@ -142,7 +143,7 @@ const AuthModals = ({ language, darkMode, isAuthenticated, mobileView = false, t
   const handleResendVerification = async () => {
     setIsLoading(true);
     try {
-      await axios.post('https://newstore-sepia.vercel.app/api/auth/resend-verification', {
+      await axios.post(`${AUTH_API_URL}resend-verification`, {
         userId: errors.userId
       });
       setSuccessMessage(language === "uk"
@@ -168,7 +169,7 @@ const AuthModals = ({ language, darkMode, isAuthenticated, mobileView = false, t
 
         if (success) {
           setSuccessMessage(language === "uk" ? "Реєстрація успішна!" : "Registration successful!");
-          setTimeout(handleClose, 15000000);
+          setTimeout(handleClose, 1500);
         } else {
           setErrors({ apiError: error.message || String(error) });
         }
@@ -183,7 +184,7 @@ const AuthModals = ({ language, darkMode, isAuthenticated, mobileView = false, t
   const handleForgotPassword = async () => {
     try {
       setIsLoading(true);
-      await axios.post('https://newstore-sepia.vercel.app/api/auth/forgot-password', {
+      await axios.post(`${AUTH_API_URL}forgot-password`, {
         email: forgotPasswordEmail
       });
       setSuccessMessage(language === "uk" 

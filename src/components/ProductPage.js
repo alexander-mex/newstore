@@ -83,7 +83,6 @@ const ProductPage = ({ darkMode, language, filters: initialFilters }) => {
       isSale: searchParams.get("isSale") === "true" ? true : null,
     };
   
-    console.log("Parsed filters:", newFilters); // Логування для перевірки
     if (newFilters.isSale || newFilters.isNewPrice) {
       newFilters.category = null;
       newFilters.subcategory = null;
@@ -125,8 +124,6 @@ const ProductPage = ({ darkMode, language, filters: initialFilters }) => {
           ...(filters.isNewPrice !== null && { isNewPrice: filters.isNewPrice }),
           ...(filters.isSale !== null && { isSale: filters.isSale }),
         };
-  
-        console.log("Fetching products with params:", params);
   
         if (location.state?.searchResults && page === 1 && reset) {
           console.log("Using search results from location.state:", location.state.searchResults);
@@ -175,8 +172,6 @@ const ProductPage = ({ darkMode, language, filters: initialFilters }) => {
             },
             headers: { "Cache-Control": "no-cache" },
           });
-  
-          console.log("Products response:", response.data);
   
           if (reset) {
             setProducts(response.data.products || []);

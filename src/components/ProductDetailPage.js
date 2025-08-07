@@ -4,6 +4,7 @@ import { Container, Row, Col, Button, Spinner, Alert, Image, Form } from "react-
 import axios from "axios";
 import { useCart } from "./Cart";
 import { useAuth } from "../context/AuthContext";
+import { PRODUCTS_API_URL } from '../config/constants';
 import "../styles/ProductDetailPage.css";
 
 function ProductDetailPage({ darkMode, language }) {
@@ -40,7 +41,7 @@ function ProductDetailPage({ darkMode, language }) {
 
       try {
         setLoading(true);
-        const response = await axios.get(`https://newstore-sepia.vercel.app/api/products/${id}`);
+        const response = await axios.get(`${PRODUCTS_API_URL}/products/${id}`);
         setProduct(response.data);
         setLoading(false);
       } catch (err) {
@@ -118,12 +119,12 @@ function ProductDetailPage({ darkMode, language }) {
     try {
       let response;
       if (editingReview) {
-        response = await axios.put(`https://newstore-sepia.vercel.app/api/products/${product._id}/reviews/${editingReview}`, {
+        response = await axios.put(`${PRODUCTS_API_URL}/${product._id}/reviews/${editingReview}`, {
           text: reviewText,
           rating: reviewRating,
         });
       } else {
-        response = await axios.post(`https://newstore-sepia.vercel.app/api/products/${product._id}/reviews`, {
+        response = await axios.post(`${PRODUCTS_API_URL}/${product._id}/reviews`, {
           userId: user.id,
           userName: user.name,
           text: reviewText,
@@ -155,7 +156,7 @@ function ProductDetailPage({ darkMode, language }) {
       }
   
       const response = await axios.delete(
-        `https://newstore-sepia.vercel.app/api/products/${product._id}/reviews/${reviewId}`
+        `${PRODUCTS_API_URL}/${product._id}/reviews/${reviewId}`
       );
   
       if (response.data && response.data._id) {

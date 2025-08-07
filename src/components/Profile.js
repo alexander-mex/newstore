@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button, Form, Modal, Alert, Card, Container } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
+import { AUTH_API_URL } from '../config/constants';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -48,7 +49,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     if (isAuthenticated) {
       const fetchProfileData = async () => {
         try {
-          const response = await axios.get('https://newstore-sepia.vercel.app/api/auth/profile', {
+          const response = await axios.get(`${AUTH_API_URL}/profile`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -63,7 +64,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
 
       const fetchOrders = async () => {
         try {
-          const response = await axios.get('https://newstore-sepia.vercel.app/api/orders', {
+          const response = await axios.get(`${AUTH_API_URL}/orders`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -131,7 +132,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     if (validateProfile()) {
       try {
         const response = await axios.put(
-          'https://newstore-sepia.vercel.app/api/auth/profile',
+          `${AUTH_API_URL}/profile`,
           profileData,
           {
             headers: {
@@ -166,7 +167,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     if (validatePassword()) {
       try {
         await axios.put(
-          'https://newstore-sepia.vercel.app/api/auth/password',
+          `${AUTH_API_URL}/password`,
           {
             oldPassword: passwordData.oldPassword,
             newPassword: passwordData.newPassword,
@@ -195,7 +196,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
 
   const handleResetPassword = async () => {
     try {
-      await axios.post('https://newstore-sepia.vercel.app/api/auth/forgot-password', {
+      await axios.post(`${AUTH_API_URL}/forgot-password`, {
         email: profileData.email
       });
       showToast(
@@ -220,7 +221,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     }
   
     try {
-      await axios.delete('https://newstore-sepia.vercel.app/api/auth/profile', {
+      await axios.delete(`${AUTH_API_URL}/profile`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

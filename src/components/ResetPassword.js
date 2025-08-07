@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Form, Button, Alert, Card, Container } from 'react-bootstrap';
 import axios from 'axios';
+import { AUTH_API_URL } from '../config/constants';
 import '../styles/Profile.css';
 
 const ResetPassword = ({ darkMode, language }) => {
@@ -39,7 +40,7 @@ const ResetPassword = ({ darkMode, language }) => {
 
     try {
       setLoading(true);
-      await axios.post('https://newstore-sepia.vercel.app/api/auth/reset-password', {
+      await axios.post(`${AUTH_API_URL}/reset-password`, {
         token,
         newPassword: password
       });

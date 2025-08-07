@@ -1,7 +1,7 @@
 // src/config/constants.js
-export const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://newstore-sepia.vercel.app/' 
-  : 'http://localhost:5000/api';
+export const API_BASE_URL = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' 
+  ? 'https://newstore-sepia.vercel.app/api' 
+  : 'http://localhost:5000/api');
 
 export const PRODUCTS_API_URL = `${API_BASE_URL}/products`;
 export const AUTH_API_URL = `${API_BASE_URL}/auth`;

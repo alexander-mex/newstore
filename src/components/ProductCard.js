@@ -124,7 +124,7 @@ function ProductCard({
               <Carousel.Item key={index}>
                 <img
                   className="product-image"
-                  src={`http://localhost:5000${img}`}
+                  src={img}
                   alt={`${getLocalizedText(name)} ${index + 1}`}
                 />
               </Carousel.Item>

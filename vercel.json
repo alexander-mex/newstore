@@ -22,17 +22,24 @@
       "dest": "/server/server.js"
     },
     {
-      "src": "/uploads/(.*)",
+      "src": "/Uploads/(.*)",
       "dest": "/server/server.js"
     },
     {
+      "src": "/static/(.*)",
+      "dest": "/build/static/$1"
+    },
+    {
+      "src": "/products/static/(.*)",
+      "dest": "/build/static/$1"
+    },
+    {
+      "src": "/.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$",
+      "dest": "/build/$0"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/build/index.html"
     }
-  ],
-  "functions": {
-    "server/server.js": {
-      "runtime": "nodejs22.x"
-    }
-  }
+  ]
 }

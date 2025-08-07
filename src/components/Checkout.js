@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Alert, ListGroup, Badge } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
+import { ORDERS_API_URL } from '../config/constants';
 import { useCart } from './Cart';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -51,7 +52,7 @@ const CheckoutPage = ({ darkMode, language }) => {
     if (isAuthenticated) {
       const fetchUserData = async () => {
         try {
-          const response = await axios.get('https://newstore-sepia.vercel.app/api/auth/profile', {
+          const response = await axios.get(`${ORDERS_API_URL}/profile`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -148,7 +149,7 @@ const CheckoutPage = ({ darkMode, language }) => {
         totalAmount: total
       };
       
-      const response = await axios.post('https://newstore-sepia.vercel.app/api/orders', orderData, {
+      const response = await axios.post(`${ORDERS_API_URL}/orders`, orderData, {
         headers: isAuthenticated ? {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         } : {}

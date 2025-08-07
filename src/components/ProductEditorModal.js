@@ -56,7 +56,7 @@ function ProductEditorModal({ show, onHide, product, darkMode, language, onSave 
         sizes: product.sizes || "", // Ensure sizes is treated as a string
         colors: product.colors || { uk: "", en: "" } // Ensure colors is treated as an object
       });
-      setPreviewUrls(Array.isArray(product.images) ? product.images.map(img => `http://localhost:5000${img}`) : []);
+      setPreviewUrls(Array.isArray(product.images) ? product.images.map(img => `${img}`) : []);
     } else {
       resetForm();
     }
