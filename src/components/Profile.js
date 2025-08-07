@@ -10,6 +10,7 @@ import '../styles/Profile.css';
 
 const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
   const { logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -27,6 +28,7 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
   const [deleteAccountPassword, setDeleteAccountPassword] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const showToast = useCallback((message, type = 'success') => {
     toast[type](message, {
@@ -41,44 +43,88 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     });
   }, [darkMode]);
 
+  // Create axios instance with interceptors
+  const createAxiosInstance = useCallback(() => {
+    const instance = axios.create();
+    
+    // Request interceptor to add auth header
+    instance.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
+
+    // Response interceptor to handle auth errors
+    instance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response?.status === 401) {
+          // Token expired or invalid
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          logout();
+          navigate('/login');
+          showToast(
+            language === 'uk' ? 'Сесія закінчилася. Увійдіть знову.' : 'Session expired. Please login again.',
+            'error'
+          );
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return instance;
+  }, [logout, navigate, showToast, language]);
+
   const confirmResetPassword = () => {
     setShowResetPasswordModal(true);
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      const fetchProfileData = async () => {
-        try {
-          const response = await axios.get(`${AUTH_API_URL}/profile`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          });
-          const { name, email, phone } = response.data;
-          setProfileData({ name, email, phone });
-        } catch (error) {
-          console.error('Error fetching profile data:', error);
-          showToast(language === 'uk' ? 'Помилка завантаження профілю' : 'Error loading profile', 'error');
-        }
-      };
-
-      const fetchOrders = async () => {
-        try {
-          const response = await axios.get(`${AUTH_API_URL}/orders`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          });
-          setOrders(response.data);
-        } catch (error) {
-          console.error('Error fetching orders:', error);
-        }
-      };
-
-      fetchProfileData();
-      fetchOrders();
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
     }
-  }, [isAuthenticated, language, darkMode, showToast]);
+
+    const axiosInstance = createAxiosInstance();
+
+    const fetchProfileData = async () => {
+      try {
+        setLoading(true);
+        const response = await axiosInstance.get(`${AUTH_API_URL}/profile`);
+        const { name, email, phone } = response.data;
+        setProfileData({ name, email, phone: phone || '' });
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+        if (error.response?.status !== 401) {
+          showToast(
+            language === 'uk' ? 'Помилка завантаження профілю' : 'Error loading profile',
+            'error'
+          );
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchOrders = async () => {
+      try {
+        const response = await axiosInstance.get(`${AUTH_API_URL}/orders`);
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+        // Don't show error for orders as it's not critical
+      }
+    };
+
+    fetchProfileData();
+    fetchOrders();
+  }, [isAuthenticated, language, createAxiosInstance, navigate, showToast]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -131,15 +177,8 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     e.preventDefault();
     if (validateProfile()) {
       try {
-        const response = await axios.put(
-          `${AUTH_API_URL}/profile`,
-          profileData,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          }
-        );
+        const axiosInstance = createAxiosInstance();
+        const response = await axiosInstance.put(`${AUTH_API_URL}/profile`, profileData);
 
         let successMsg = language === 'uk' ? 'Профіль оновлено!' : 'Profile updated!';
         if (response.data.emailChanged) {
@@ -154,10 +193,12 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
         showToast(successMsg);
       } catch (error) {
         console.error('Error updating profile:', error);
-        showToast(
-          language === 'uk' ? 'Помилка при оновленні профілю' : 'Error updating profile',
-          'error'
-        );
+        if (error.response?.status !== 401) {
+          showToast(
+            language === 'uk' ? 'Помилка при оновленні профілю' : 'Error updating profile',
+            'error'
+          );
+        }
       }
     }
   };
@@ -166,18 +207,11 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     e.preventDefault();
     if (validatePassword()) {
       try {
-        await axios.put(
-          `${AUTH_API_URL}/password`,
-          {
-            oldPassword: passwordData.oldPassword,
-            newPassword: passwordData.newPassword,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          }
-        );
+        const axiosInstance = createAxiosInstance();
+        await axiosInstance.put(`${AUTH_API_URL}/password`, {
+          oldPassword: passwordData.oldPassword,
+          newPassword: passwordData.newPassword,
+        });
         showToast(language === 'uk' ? 'Пароль змінено!' : 'Password changed!');
         setPasswordData({
           oldPassword: '',
@@ -186,17 +220,20 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
         });
       } catch (error) {
         console.error('Error changing password:', error);
-        const errorMsg = error.response?.data?.message?.includes('Invalid old password')
-          ? language === 'uk' ? 'Невірний старий пароль' : 'Invalid old password'
-          : language === 'uk' ? 'Помилка зміни пароля' : 'Error changing password';
-        showToast(errorMsg, 'error');
+        if (error.response?.status !== 401) {
+          const errorMsg = error.response?.data?.message?.includes('Invalid old password')
+            ? language === 'uk' ? 'Невірний старий пароль' : 'Invalid old password'
+            : language === 'uk' ? 'Помилка зміни пароля' : 'Error changing password';
+          showToast(errorMsg, 'error');
+        }
       }
     }
   };
 
   const handleResetPassword = async () => {
     try {
-      await axios.post(`${AUTH_API_URL}/forgot-password`, {
+      const axiosInstance = createAxiosInstance();
+      await axiosInstance.post(`${AUTH_API_URL}/forgot-password`, {
         email: profileData.email
       });
       showToast(
@@ -206,11 +243,13 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
       );
     } catch (error) {
       console.error('Error sending reset password email:', error);
-      showToast(
-        error.response?.data?.message ||
-        (language === 'uk' ? 'Помилка відправки листа' : 'Error sending email'),
-        'error'
-      );
+      if (error.response?.status !== 401) {
+        showToast(
+          error.response?.data?.message ||
+          (language === 'uk' ? 'Помилка відправки листа' : 'Error sending email'),
+          'error'
+        );
+      }
     }
   };
 
@@ -221,22 +260,22 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     }
   
     try {
-      await axios.delete(`${AUTH_API_URL}/profile`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        data: { password } // Відправка пароля на сервер для перевірки
+      const axiosInstance = createAxiosInstance();
+      await axiosInstance.delete(`${AUTH_API_URL}/profile`, {
+        data: { password }
       });
       showToast(language === 'uk' ? 'Акаунт успішно видалено' : 'Account deleted successfully');
       logout();
       navigate('/');
     } catch (error) {
       console.error('Error deleting account:', error);
-      showToast(
-        error.response?.data?.message ||
-        (language === 'uk' ? 'Помилка при видаленні акаунту' : 'Error deleting account'),
-        'error'
-      );
+      if (error.response?.status !== 401) {
+        showToast(
+          error.response?.data?.message ||
+          (language === 'uk' ? 'Помилка при видаленні акаунту' : 'Error deleting account'),
+          'error'
+        );
+      }
     }
   };
 
@@ -245,7 +284,15 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
     navigate('/');
   };
 
-  const navigate = useNavigate();
+  if (loading) {
+    return (
+      <Container className="d-flex justify-content-center align-items-center" style={{ height: '400px' }}>
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -382,13 +429,13 @@ const Profile = ({ darkMode, language, toggleDarkMode, toggleLanguage }) => {
                     <Button variant="primary" type="submit" className="profile-button">
                       {language === 'uk' ? 'Змінити пароль' : 'Change Password'}
                     </Button>
-                  <Button
-                    variant="warning"
-                    onClick={confirmResetPassword}
-                    className="profile-button"
-                  >
-                    {language === 'uk' ? 'Скинути пароль' : 'Reset Password'}
-                  </Button>
+                    <Button
+                      variant="warning"
+                      onClick={confirmResetPassword}
+                      className="profile-button"
+                    >
+                      {language === 'uk' ? 'Скинути пароль' : 'Reset Password'}
+                    </Button>
                   </div>
                 </Form>
               </Card.Body>

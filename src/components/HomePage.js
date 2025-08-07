@@ -20,7 +20,6 @@ const HomePage = ({ darkMode, language }) => {
       });
       const cardsData = response.data.cards;
       if (Array.isArray(cardsData)) {
-        console.log("Fetched cards:", cardsData.map(card => ({ id: card._id, image: card.image, link: card.link })));
         const validCards = cardsData.filter(
           (card) =>
             card.title &&
